@@ -26,4 +26,12 @@ export interface Listing {
   user: User['username'];
   category_id: Category['id'];
   category: Category['name'];
+  price: string;
+  image?: ProductImage[];
+}
+
+export interface ProductImage {
+  id: number;
+  image: string;
+  alt_text: string;
 }
