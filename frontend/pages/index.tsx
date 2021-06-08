@@ -1,11 +1,14 @@
-import Box from '@material-ui/core/Box';
-
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Link from 'next/link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Grid,
+  Typography,
+  Container,
+  Box,
+} from '@material-ui/core';
 
 import { useStyles } from '../styles/listings.styles';
 import Layout from '../components/Layout';
@@ -34,6 +37,15 @@ const Home = ({ listings, categories }: Props) => {
               >
                 <Grid item xs={6} sm={4} md={3}>
                   <Card className={classes.card} elevation={0}>
+                    {listing.image && (
+                      <CardMedia
+                        className={classes.cardMedia}
+                        // component="img"
+                        image={listing.image[0].image}
+                        title={listing.image[0].alt_text}
+                        // alt={post.product_image[0].alt_text}
+                      />
+                    )}
                     <CardContent>
                       <Typography gutterBottom component="p">
                         {listing.title}, from {listing.user}
