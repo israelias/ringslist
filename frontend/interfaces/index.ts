@@ -5,6 +5,25 @@
 // import { User } from 'path/to/interfaces';
 
 export type User = {
-  id: number
-  name: string
+  id: number;
+  username: string;
+  password: string;
+  listings: Listing[];
+};
+
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  listings?: Listing[];
+}
+export interface Listing {
+  id: number;
+  title: string;
+  description: string;
+  slug: string;
+  user_id: User['id'];
+  user: User['username'];
+  category_id: Category['id'];
+  category: Category['name'];
 }
