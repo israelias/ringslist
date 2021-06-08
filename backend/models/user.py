@@ -14,8 +14,9 @@ class User(db.Model):
     listings = db.relationship("Listing", lazy="dynamic", primaryjoin="User.id == Listing.user_id")
     tokens = db.relationship("TokenBlocklist", lazy="dynamic", primaryjoin="User.id == TokenBlocklist.user_id")
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 
     def __repr__(self):
         return "User(username=%s)" % self.name

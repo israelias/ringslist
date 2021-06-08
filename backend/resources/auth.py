@@ -18,7 +18,11 @@ UNAUTHORIZED_ERROR = "Username or password do not match."
 REGISTRATION_SUCCESS = "Account Created"
 SIGNIN_SUCCESS = "Welcome back, '{}'."
 
-user_ns = Namespace("user", description="User Auth related ops")
+user_ns = Namespace("user", description="User auth related ops")
+user_signin_ns = Namespace("signin", description="User Signin related ops")
+user_signup_ns = Namespace("signup", description="User Signup related ops")
+user_signout_ns = Namespace("signout", description="User Signout related ops")
+
 user_schema = UserSchema()
 
 # Model required by flask_restplus for expect
@@ -26,17 +30,18 @@ user_format = user_ns.model(
     "User",
     {
         "username": fields.String("Username of user"),
+        "password": fields.String("Password of user"),
     },
 )
 
 
 class SignUpApi(Resource):
     @user_ns.expect(user_format)
-    @user_ns.doc("Register User")
+    @user_signup_ns.doc("Register User")
     def post(self):
         body = request.get_json()
         username = body["username"]
-        if User.find_by_name(username):
+        if User.find_by_username(username):
             return {"message": USERNAME_ALREADY_EXISTS.format(username)}, 400
         user = user_schema.load(body)
         user.hash_password()
@@ -54,7 +59,7 @@ class SignUpApi(Resource):
 
 class SignInApi(Resource):
     @user_ns.expect(user_format)
-    @user_ns.doc("SignIn User")
+    @user_signin_ns.doc("SignIn User")
     def post(self):
         body = request.get_json()
         user = User.query.get(username=body.get("username"))
@@ -76,7 +81,7 @@ class SignInApi(Resource):
 class SignOutApi(Resource):
     @jwt_required()
     @user_ns.expect(user_format)
-    @user_ns.doc("SignOut User")
+    @user_signout_ns.doc("SignOut User")
     def post(self):
         revoked_token = get_jwt()
 
