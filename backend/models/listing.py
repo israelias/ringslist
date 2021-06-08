@@ -9,7 +9,7 @@ class Listing(db.Model):
     __tablename__ = "listing"
 
     id = db.Column(db.Integer, primary_key=True)
-    ad_id = db.Column(db.Integer, unique=True, default=datetime.datetime.utcnow)
+    # ad_id = db.Column(db.Integer, unique=True, default=datetime.datetime.utcnow)
     title = db.Column(db.String(100), nullable=False, unique=True)
     description = db.Column(db.String(300))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
