@@ -9,7 +9,15 @@ from marshmallow import ValidationError
 
 from database.db import db
 from database.ma import ma
-from resources.auth import SignInApi, SignOutApi, SignUpApi, user_ns
+from resources.auth import (
+    SignInApi,
+    SignOutApi,
+    SignUpApi,
+    user_ns,
+    user_signin_ns,
+    user_signout_ns,
+    user_signup_ns,
+)
 from resources.category import CategoriesAPI, CategoryAPI, categories_ns, category_ns
 from resources.listing import ListingAPI, ListingsAPI, listing_ns, listings_ns
 
@@ -64,6 +72,9 @@ api.add_namespace(listings_ns)
 api.add_namespace(category_ns)
 api.add_namespace(categories_ns)
 api.add_namespace(user_ns)
+api.add_namespace(user_signup_ns)
+api.add_namespace(user_signin_ns)
+api.add_namespace(user_signout_ns)
 
 
 @app.before_first_request
@@ -80,7 +91,9 @@ listing_ns.add_resource(ListingAPI, "/<int:id>")
 listings_ns.add_resource(ListingsAPI, "")
 category_ns.add_resource(CategoryAPI, "/<int:id>")
 categories_ns.add_resource(CategoriesAPI, "")
-
+user_signup_ns.add_resource(SignUpApi, "/auth/signup")
+user_signin_ns.add_resource(SignInApi, "/auth/signin")
+user_signout_ns.add_resource(SignOutApi, "/auth/signout")
 
 if __name__ == "__main__":
     db.init_app(app)
