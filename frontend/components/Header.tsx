@@ -1,10 +1,13 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import { Container } from '@material-ui/core';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import Link from 'next/link';
+
+import {
+  AppBar,
+  Toolbar,
+  List,
+  ListItem,
+  Container,
+} from '@material-ui/core';
 
 import { useStyles } from '../styles/header.styles';
 import { Category } from '../interfaces';
