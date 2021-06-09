@@ -21,11 +21,6 @@ from resources.category import CategoriesAPI, CategoryAPI, categories_ns, catego
 from resources.listing import ListingAPI, ListingsAPI, listing_ns, listings_ns
 from resources.user import UserAPI, UsersAPI, user_ns, users_ns
 
-# from werkzeug.utils import cached_property
-
-# from database.db import initialize_db
-# from database.ma import initialize_ma
-
 
 if not os.path.exists("env.py"):
     pass
