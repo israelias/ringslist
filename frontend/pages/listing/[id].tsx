@@ -6,7 +6,7 @@ import {
   Paper,
   Grid,
   Box,
-  Hidden,
+  // Hidden,
   Typography,
 } from '@material-ui/core';
 
