@@ -21,19 +21,18 @@ type Props = {
 const Feed = ({ listings }: Props) => {
   const classes = useStyles();
   return (
-    <
-    >
+    <>
       <main>
         <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={2}>
             {listings.map((listing) => (
               <Link
                 key={listing.id}
-                href={`listing/${encodeURIComponent(listing.slug)}`}
+                href={`listing/${encodeURIComponent(listing.id)}`}
               >
                 <Grid item xs={6} sm={4} md={3}>
                   <Card className={classes.card} elevation={0}>
-                    {listing.image && (
+                    {/* {listing.image && (
                       <CardMedia
                         className={classes.cardMedia}
                         // component="img"
@@ -41,17 +40,20 @@ const Feed = ({ listings }: Props) => {
                         title={listing.image[0].alt_text}
                         // alt={post.product_image[0].alt_text}
                       />
-                    )}
+                    )} */}
                     <CardContent>
                       <Typography gutterBottom component="p">
-                        {listing.title}, from {listing.user}
+                        {listing.title}, from {listing.user_id}
+                      </Typography>
+                      <Typography gutterBottom component="p">
+                        {listing.description}
                       </Typography>
                       <Box
                         component="p"
                         fontSize={16}
                         fontWeight={900}
                       >
-                        {listing.description}
+                        {listing.price}
                       </Box>
                     </CardContent>
                   </Card>
@@ -64,7 +66,5 @@ const Feed = ({ listings }: Props) => {
     </>
   );
 };
-
-
 
 export default Feed;

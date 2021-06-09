@@ -85,7 +85,7 @@ function Header({ categories }: Props) {
                 >
                   <Link
                     href={`/category/${encodeURIComponent(
-                      category.slug
+                      category.id
                     )}`}
                   >
                     <a className={classes.listItemLink}>
