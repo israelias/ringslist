@@ -3,15 +3,27 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import Feed from '../../components/Feed';
 import Layout from '../../components/Layout';
 
-import { Listing, Category } from '../../interfaces';
+import { Category } from '../../interfaces';
 
 type Props = {
-  listings: Listing[];
+  category_listings: Category;
   categories: Category[];
   category: string;
+  category_name: string;
 };
 
-const Category = ({ listings, categories, category }: Props) => {
+const CategoryPage = ({
+  category_listings,
+  categories,
+  category,
+}: Props) => {
+  if (
+    !category_listings ||
+    category_listings?.listings?.length === 0
+  ) {
+    return <p>No Listings.</p>;
+  }
+  const listings = category_listings.listings;
   return (
     <Layout
       title={`RingsListings: ${category}`}
@@ -25,12 +37,14 @@ const Category = ({ listings, categories, category }: Props) => {
 // This function gets called at build time
 export const getStaticPaths: GetStaticPaths = async () => {
   // Call an external API endpoint to get posts
-  const res = await fetch('http://127.0.0.1:8000/api/category');
-  const listings = await res.json();
+  const res = await fetch(
+    'https://rlist-backend.herokuapp.com/api/categories'
+  );
+  const categories = await res.json();
 
   // Get the paths we want to pre-render based on posts
-  const paths = listings.map((listing: Listing) => ({
-    params: { slug: listing.slug },
+  const paths = categories.map((category: Category) => ({
+    params: { id: category.id.toString() },
   }));
 
   // We'll pre-render only these paths at build time.
@@ -39,22 +53,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const category = params?.slug;
+  const category = params?.id.toString();
   const res = await fetch(
-    `http:/localhost:5000/api/category/${category}`
+    `https://rlist-backend.herokuapp.com/api/category/${category}`
   );
-  const listings = await res.json();
+  const category_listings = await res.json();
 
-  const ress = await fetch('http://localhost:5000/api/categories');
+  const ress = await fetch(
+    'https://rlist-backend.herokuapp.com/api/categories'
+  );
   const categories = await ress.json();
 
   return {
     props: {
       category,
-      listings,
+
+      category_listings,
       categories,
     },
   };
 };
 
-export default Category;
+export default CategoryPage;

@@ -7,6 +7,7 @@ import {
   Grid,
   Box,
   Hidden,
+  Typography,
 } from '@material-ui/core';
 
 import Layout from '../../components/Layout';
@@ -18,7 +19,7 @@ type Props = {
   categories: Category[];
 };
 
-function Listing({ listing, categories }: Props) {
+function ListingPage({ listing, categories }: Props) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -30,7 +31,7 @@ function Listing({ listing, categories }: Props) {
     <Layout title={listing.title} categories={categories}>
       <Container maxWidth="md">
         <Grid container spacing={0}>
-          <Hidden only={['xs', 'sm']}>
+          {/* <Hidden only={['xs', 'sm']}>
             <Grid item sm={1}>
               <Paper
                 className={classes.paperImagePreview}
@@ -52,17 +53,13 @@ function Listing({ listing, categories }: Props) {
                 ))}
               </Paper>
             </Grid>
-          </Hidden>
+          </Hidden> */}
           <Grid item xs={12} sm={6}>
-            {listing.image && (
-              <Paper className={classes.paperImage} elevation={0}>
-                <img
-                  src={listing.image[0]?.image}
-                  alt={listing.image[0].alt_text}
-                  className={classes.img}
-                />
-              </Paper>
-            )}
+            <Paper className={classes.paperImage} elevation={0}>
+              <Typography gutterBottom component="p">
+                {listing.description}
+              </Typography>
+            </Paper>
           </Grid>
           <Grid item xs={12} sm={5}>
             <Paper className={classes.paperRight} elevation={0}>
@@ -73,7 +70,7 @@ function Listing({ listing, categories }: Props) {
                 £{listing.price}
               </Box>
               <Box component="p" fontSize={22} fontWeight="900" m={0}>
-                From {listing.user}
+                From {listing.user_id}
               </Box>
               <Box component="p" m={0} fontSize={14}>
                 Free Delivery & Returns (Ts&Cs apply)
@@ -89,12 +86,14 @@ function Listing({ listing, categories }: Props) {
 // This function gets called at build time
 export const getStaticPaths: GetStaticPaths = async () => {
   // Call an external API endpoint to get posts
-  const res = await fetch('http://localhost:5000/api/listings');
+  const res = await fetch(
+    'https://rlist-backend.herokuapp.com/api/listings'
+  );
   const listings = await res.json();
 
   // Get the paths we want to pre-render based on posts
   const paths = listings.map((listing: Listing) => ({
-    params: { slug: listing.slug },
+    params: { id: listing.id.toString() },
   }));
 
   // We'll pre-render only these paths at build time.
@@ -105,11 +104,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // This also gets called at build time
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const res = await fetch(
-    `http://localhost:5000/api/listings/${params.slug}`
+    `https://rlist-backend.herokuapp.com/api/listing/${
+      params && params.id.toString()
+    }`
   );
   const listing = await res.json();
 
-  const ress = await fetch('http://localhost:5000/api/categories');
+  const ress = await fetch(
+    'https://rlist-backend.herokuapp.com/api/categories'
+  );
   const categories = await ress.json();
 
   return {
@@ -120,4 +123,4 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
-export default Listing;
+export default ListingPage;
