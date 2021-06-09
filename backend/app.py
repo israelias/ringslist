@@ -1,4 +1,10 @@
 import os
+import re
+
+# Heroku-specific postgresql config
+uri = os.getenv("DATABASE_URL")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
 
 from flask import Blueprint, Flask, jsonify
 from flask_bcrypt import Bcrypt
