@@ -18,15 +18,14 @@ UNAUTHORIZED_ERROR = "Username or password do not match."
 REGISTRATION_SUCCESS = "Account Created"
 SIGNIN_SUCCESS = "Welcome back, '{}'."
 
-user_ns = Namespace("user", description="User auth related ops")
-user_signin_ns = Namespace("signin", description="User Signin related ops")
-user_signup_ns = Namespace("signup", description="User Signup related ops")
-user_signout_ns = Namespace("signout", description="User Signout related ops")
+signin_ns = Namespace("signin", description="User Signin related ops")
+signup_ns = Namespace("signup", description="User Signup related ops")
+signout_ns = Namespace("signout", description="User Signout related ops")
 
 user_schema = UserSchema()
 
 # Model required by flask_restplus for expect
-user_format = user_ns.model(
+auth_format = signin_ns.model(
     "User",
     {
         "username": fields.String("Username of user"),
@@ -36,8 +35,8 @@ user_format = user_ns.model(
 
 
 class SignUpApi(Resource):
-    @user_ns.expect(user_format)
-    @user_signup_ns.doc("Register User")
+    @signup_ns.expect(auth_format)
+    @signup_ns.doc("Register User")
     def post(self):
         body = request.get_json()
         username = body["username"]
@@ -58,12 +57,12 @@ class SignUpApi(Resource):
 
 
 class SignInApi(Resource):
-    @user_ns.expect(user_format)
-    @user_signin_ns.doc("SignIn User")
+    @signin_ns.expect(auth_format)
+    @signin_ns.doc("SignIn User")
     def post(self):
         body = request.get_json()
-        user = User.query.get(username=body.get("username"))
-        authorized = user.check_password(body.get("password"))
+        user = User.find_by_username(body["username"])
+        authorized = user.check_password(body["password"])
 
         if not authorized:
             return {"message": UNAUTHORIZED_ERROR}, 400
@@ -72,7 +71,7 @@ class SignInApi(Resource):
         access_token = create_access_token(identity=str(user.id), expires_delta=expires)
 
         return {
-            "message": SIGNIN_SUCCESS,
+            "message": SIGNIN_SUCCESS.format(user.username),
             "access_token": access_token,
             "username": user.username,
         }, 200
@@ -80,8 +79,8 @@ class SignInApi(Resource):
 
 class SignOutApi(Resource):
     @jwt_required()
-    @user_ns.expect(user_format)
-    @user_signout_ns.doc("SignOut User")
+    # @signout_ns.expect(user_format)
+    @signout_ns.doc("SignOut User")
     def post(self):
         revoked_token = get_jwt()
 
@@ -90,10 +89,10 @@ class SignOutApi(Resource):
         created_ts = int(revoked_token["iat"])
         expires_ts = int(revoked_token["exp"])
 
-        created = datetime.datetime.utcfromtimestamp(created_ts).strftime("%Y-%m-%d %H:%M:%S")
-        expires = datetime.datetime.utcfromtimestamp(expires_ts).strftime("%Y-%m-%d %H:%M:%S")
+        created = datetime.datetime.utcfromtimestamp(created_ts)
+        expires = datetime.datetime.utcfromtimestamp(expires_ts)
 
-        user = User.query.get(id=user_id)
+        user = User.find_by_id(user_id)
         now = datetime.datetime.now(datetime.timezone.utc)
 
         block_token = TokenBlocklist(
@@ -101,7 +100,7 @@ class SignOutApi(Resource):
             created_on=created,
             expires_on=expires,
             revoked_on=now,
-            revoked_by=user,
+            user_id=user.id,
         )
 
         block_token.save_to_db()

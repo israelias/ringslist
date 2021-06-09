@@ -5,6 +5,8 @@ from flask_restplus import Namespace, Resource, fields
 from models.category import Category
 from schemas.category import CategorySchema
 
+from .listing import listing_format
+
 CATEGORY_NOT_FOUND = "Category not found."
 CATEGORY_ALREADY_EXISTS = "Category '{}' Already exists."
 
@@ -20,6 +22,7 @@ category_format = categories_ns.model(
     "Category",
     {
         "name": fields.String("Name of Category"),
+        # "listings": fields.Nested(listing_format, skip_none=True),
     },
 )
 

@@ -1,9 +1,12 @@
 from flask import jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restplus import Namespace, Resource, fields
+from marshmallow.exceptions import MarshmallowError, RegistryError, ValidationError
+from models.category import Category
 from models.listing import Listing
 from models.user import User
 from schemas.listing import ListingSchema
+from sqlalchemy.exc import InternalError, NoResultFound, SQLAlchemyError
 
 ITEM_NOT_FOUND = "Listing not found."
 
@@ -17,9 +20,10 @@ listings_schema = ListingSchema(many=True)
 listing_format = listings_ns.model(
     "Listing",
     {
+        # "id": fields.Integer,
         "title": fields.String("Title of Listing"),
         "description": fields.String("Description of Listing"),
-        "user_id": fields.Integer,
+        # "user_id": fields.Integer,
         # "user": fields.String("Username of owner"),
         "category_id": fields.Integer,
         # "category": fields.String("Category of Listing"),
@@ -36,45 +40,81 @@ class ListingAPI(Resource):
 
     @jwt_required()
     def delete(self, id):
-        user_id = get_jwt_identity()
-        owner = User.find_by_id(user_id)
-        listing = Listing.query.get(id=id, user=owner)
-        if listing:
-            listing.delete_from_db()
-            return {"message": "Listing deleted successfully"}, 200
-        return {"message": ITEM_NOT_FOUND}, 404
+        try:
+            user_id = get_jwt_identity()
+            owner = User.find_by_id(user_id)
+            listing = Listing.find_by_id(id)
+            if listing:
+                if listing.user_id == owner.id:
+                    listing.delete_from_db()
+                    return {"message": "Listing deleted successfully"}, 200
+                else:
+                    return {"message": "Deleting someone else's listing is forbidden"}, 403
+
+            return {"message": ITEM_NOT_FOUND}, 404
+        except (Exception, SQLAlchemyError, MarshmallowError, InternalError) as e:
+            return {"message": "Something went wrong."}, 500
 
     @jwt_required()
     @listing_ns.expect(listing_format)
     def put(self, id):
-        user_id = get_jwt_identity()
-        body = request.get_json()
-        owner = User.find_by_id(user_id)
-        listing = Listing.query.get(id=id, user=owner)
+        try:
+            user_id = get_jwt_identity()
+            body = request.get_json()
+            owner = User.find_by_id(user_id)
+            listing = Listing.find_by_id(id)
+            category = Category.find_by_id(body["category_id"])
 
-        if listing:
-            listing.title = body["title"]
-            listing.description = body["description"]
-            listing.ad_id = body["ad_id"]
-        else:
-            listing = listing_schema.load(body)
+            if listing:
+                if listing.user_id == owner.id:
+                    listing.title = body["title"]
+                    listing.description = body["description"]
+                    listing.category_id = category.id
+            else:
+                listing = listing_schema.load(body)
 
-        listing.save_to_db()
-        return listing_schema.dump(listing), 200
+            listing.save_to_db()
+            return listing_schema.dump(listing), 200
+        except ValidationError:
+            return {"message": "Request is missing required fields."}, 400
+        except (Exception, SQLAlchemyError, MarshmallowError, InternalError) as e:
+            return {"message": "Something went wrong."}, 500
 
 
 class ListingsAPI(Resource):
     @listings_ns.doc("Get all the Listings")
     def get(self):
-        return listings_schema.dump(Listing.find_all()), 200
+        try:
+            return listings_schema.dump(Listing.find_all()), 200
+        except NoResultFound:
+            return {"message": "No listings match this query."}, 410
 
     @jwt_required()
     @listings_ns.expect(listing_format)
     @listings_ns.doc("Create a Listing")
     def post(self):
-        user_id = get_jwt_identity()
-        body = request.get_json()
-        listing = listing_schema.load(body)
-        listing.save_to_db()
+        try:
+            user_id = get_jwt_identity()
+            body = request.get_json()
+            owner = User.find_by_id(user_id)
+            # category = Category.find_by_id(body["category_id"])
+            listing = listing_schema.load(body)
+            # listing = Listing(
+            #     title=body["title"],
+            #     description=body["description"],
+            #     user_id=owner["username"],
+            #     category_id=category.id,
+            # )
+            # listing = listing_schema.load(
+            #     title=body["title"],
+            #     description=body["description"],
+            #     user_id=owner["username"],
+            #     category_id=category.id,
+            # )
+            listing.save_to_db()
 
-        return listing_schema.dump(listing), 201
+            return listing_schema.dump(listing), 201
+        except ValidationError:
+            return {"message": "Request is missing required fields."}, 400
+        except (Exception, SQLAlchemyError, MarshmallowError, InternalError) as e:
+            return {"message": "Something went wrong."}, 500
