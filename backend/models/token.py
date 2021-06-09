@@ -13,7 +13,7 @@ class TokenBlocklist(db.Model):
     revoked_on = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user = db.relationship(
-        "User",
+        "User", back_populates="tokens"
     )
 
     def save_to_db(self) -> None:

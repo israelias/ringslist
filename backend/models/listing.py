@@ -9,17 +9,15 @@ class Listing(db.Model):
     __tablename__ = "listing"
 
     id = db.Column(db.Integer, primary_key=True)
-    # ad_id = db.Column(db.Integer, unique=True, default=datetime.datetime.utcnow)
+
     title = db.Column(db.String(100), nullable=False, unique=True)
     description = db.Column(db.String(300))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    user = db.relationship(
-        "User",
-    )
+    # user_username = db.Column(db.String(100), db.ForeignKey("user.username"))
+    user = db.relationship("User", back_populates="listings")
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
-    category = db.relationship(
-        "Category",
-    )
+    # category_name = db.Column(db.String(100), db.ForeignKey("category.name"))
+    category = db.relationship("Category", back_populates="listings")
 
     def __init__(self, title, description, user_id, category_id):
         self.title = title
@@ -37,6 +35,7 @@ class Listing(db.Model):
 
     def json(self):
         return {
+            "id": self.id,
             "title": self.title,
             "description": self.description,
             "owner": self.user_id,

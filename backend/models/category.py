@@ -10,7 +10,9 @@ class Category(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, unique=True)
-    listings = db.relationship("Listing", lazy="dynamic", primaryjoin="Category.id == Listing.category_id")
+    listings = db.relationship(
+        "Listing", lazy="dynamic", primaryjoin="Category.id == Listing.category_id", back_populates="category"
+    )
 
     def __init__(self, name):
         self.name = name

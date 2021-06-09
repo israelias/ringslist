@@ -11,8 +11,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(10), nullable=False)
-    listings = db.relationship("Listing", lazy="dynamic", primaryjoin="User.id == Listing.user_id")
-    tokens = db.relationship("TokenBlocklist", lazy="dynamic", primaryjoin="User.id == TokenBlocklist.user_id")
+    listings = db.relationship(
+        "Listing", lazy="dynamic", primaryjoin="User.id == Listing.user_id", back_populates="user"
+    )
+    tokens = db.relationship(
+        "TokenBlocklist", lazy="dynamic", primaryjoin="User.id == TokenBlocklist.user_id", back_populates="user"
+    )
 
     def __init__(self, username, password):
         self.username = username
@@ -23,6 +27,13 @@ class User(db.Model):
 
     def __str__(self):
         return self.username
+
+    def json(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "listings": self.listings,
+        }
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode("utf8")
