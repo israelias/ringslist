@@ -2,50 +2,52 @@ import datetime
 from typing import List
 
 from database.db import db
-from flask_bcrypt import check_password_hash, generate_password_hash
 
 
-class Category(db.Model):
-    __tablename__ = "category"
+# from .listing import Listing
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False, unique=True)
-    listings = db.relationship(
-        "Listing", lazy="dynamic", primaryjoin="Category.id == Listing.category_id", back_populates="category"
-    )
 
-    def __init__(self, name):
-        self.name = name
+# class Category(db.Model):
+#     __tablename__ = "category"
 
-    def __str__(self):
-        return self.name
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(100), nullable=False, unique=True)
+#     listings = db.relationship(
+#         "Listing", lazy="dynamic", primaryjoin="Category.id == Listing.category_id", back_populates="category"
+#     )
 
-    def __repr__(self):
-        return "Category(name=%s)" % self.name
+#     def __init__(self, name):
+#         self.name = name
 
-    def json(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "listings": self.listings,
-        }
+#     def __str__(self):
+#         return self.name
 
-    @classmethod
-    def find_by_name(cls, name) -> "Category":
-        return cls.query.filter_by(name=name).first()
+#     def __repr__(self):
+#         return "Category(name=%s)" % self.name
 
-    @classmethod
-    def find_by_id(cls, _id) -> "Category":
-        return cls.query.filter_by(id=_id).first()
+#     def json(self):
+#         return {
+#             "id": self.id,
+#             "name": self.name,
+#             "listings": self.listings,
+#         }
 
-    @classmethod
-    def find_all(cls) -> List["Category"]:
-        return cls.query.all()
+#     @classmethod
+#     def find_by_name(cls, name) -> "Category":
+#         return cls.query.filter_by(name=name).first()
 
-    def save_to_db(self) -> None:
-        db.session.add(self)
-        db.session.commit()
+#     @classmethod
+#     def find_by_id(cls, _id) -> "Category":
+#         return cls.query.filter_by(id=_id).first()
 
-    def delete_from_db(self) -> None:
-        db.session.delete(self)
-        db.session.commit()
+#     @classmethod
+#     def find_all(cls) -> List["Category"]:
+#         return cls.query.all()
+
+#     def save_to_db(self) -> None:
+#         db.session.add(self)
+#         db.session.commit()
+
+#     def delete_from_db(self) -> None:
+#         db.session.delete(self)
+#         db.session.commit()

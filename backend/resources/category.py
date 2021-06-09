@@ -2,7 +2,7 @@ from database.db import db
 from flask import jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restplus import Namespace, Resource, fields
-from models.category import Category
+from models.listing import Category
 from schemas.category import CategorySchema
 
 from .listing import listing_format
@@ -22,7 +22,7 @@ category_format = categories_ns.model(
     "Category",
     {
         "name": fields.String("Name of Category"),
-        # "listings": fields.Nested(listing_format, skip_none=True),
+        "listings": fields.Nested(listing_format, skip_none=True),
     },
 )
 

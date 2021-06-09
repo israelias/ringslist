@@ -2,7 +2,7 @@ from flask import jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restplus import Namespace, Resource, fields
 from marshmallow.exceptions import MarshmallowError, RegistryError, ValidationError
-from models.category import Category
+# from models.category import Category
 from models.listing import Listing
 from models.user import User
 from schemas.listing import ListingSchema
@@ -61,7 +61,7 @@ class ListingAPI(Resource):
             body = request.get_json()
             owner = User.find_by_id(user_id)
             listing = Listing.find_by_id(id)
-            category = Category.find_by_id(body["category_id"])
+            # category = Category.find_by_id(body["category_id"])
 
             if listing:
                 if listing.user_id == owner.id:

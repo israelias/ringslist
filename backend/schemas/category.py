@@ -1,5 +1,5 @@
 from database.ma import ma
-from models.category import Category
+from models.listing import Category
 from models.listing import Listing
 
 from schemas.listing import ListingSchema

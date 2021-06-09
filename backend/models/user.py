@@ -2,7 +2,8 @@ import datetime
 from typing import List
 
 from database.db import db
-from flask_bcrypt import check_password_hash, generate_password_hash
+
+from .listing import Listing
 
 
 class User(db.Model):
@@ -34,12 +35,6 @@ class User(db.Model):
             "username": self.username,
             "listings": self.listings,
         }
-
-    def hash_password(self):
-        self.password = generate_password_hash(self.password).decode("utf8")
-
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
 
     @classmethod
     def find_by_username(cls, username) -> "User":

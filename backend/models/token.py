@@ -2,7 +2,7 @@ import datetime
 from typing import List
 
 from database.db import db
-from flask_bcrypt import check_password_hash, generate_password_hash
+
 
 
 class TokenBlocklist(db.Model):

@@ -10,8 +10,8 @@ from flask_jwt_extended import (
 from flask_restplus import Namespace, Resource, fields
 from models.token import TokenBlocklist
 from models.user import User
-from schemas.user import UserSchema
 from schemas.auth import AuthSchema
+from schemas.user import UserSchema
 
 USERNAME_NOT_FOUND = "Username not found."
 USERNAME_ALREADY_EXISTS = "Username '{}' Already exists."
@@ -44,8 +44,8 @@ class SignUpApi(Resource):
         if User.find_by_username(username):
             return {"message": USERNAME_ALREADY_EXISTS.format(username)}, 400
         user = user_schema.load(body)
-        # user.hash_password()
-        # user.save_to_db()
+
+        user.save_to_db()
 
         expires = datetime.timedelta(hours=3)
         access_token = create_access_token(identity=str(user.id), expires_delta=expires)
@@ -63,8 +63,7 @@ class SignInApi(Resource):
     def post(self):
         body = request.get_json()
         user = User.find_by_username(body["username"])
-        # authorized = user.check_password(body["password"])
-        authorized = user.password == body['password']
+        authorized = user.password == body["password"]
 
         if not authorized:
             return {"message": UNAUTHORIZED_ERROR}, 400

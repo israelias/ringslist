@@ -1,6 +1,5 @@
 from database.ma import ma
-from models.category import Category
-from models.listing import Listing
+from models.listing import Category, Listing
 
 
 class ListingSchema(ma.SQLAlchemyAutoSchema):  # noqa
