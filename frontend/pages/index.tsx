@@ -1,6 +1,8 @@
 import Feed from '../components/Feed';
 import Layout from '../components/Layout';
 
+import { getRequest } from '../services/crud.service';
+
 import { Listing, Category } from '../interfaces';
 
 type Props = {
@@ -22,10 +24,14 @@ const Home = ({ listings, categories }: Props) => {
 };
 
 export async function getStaticProps() {
-  const res = await fetch('http://localhost:5000/api/listings');
+  const res = await fetch(
+    'https://rlist-backend.herokuapp.com/api/listings'
+  );
   const listings = await res.json();
 
-  const ress = await fetch('http://localhost:5000/api/categories');
+  const ress = await fetch(
+    'https://rlist-backend.herokuapp.com/api/categories'
+  );
   const categories = await ress.json();
 
   return {
