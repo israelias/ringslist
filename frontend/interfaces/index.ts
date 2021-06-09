@@ -14,24 +14,13 @@ export type User = {
 export interface Category {
   id: number;
   name: string;
-  slug: string;
-  listings?: Listing[];
+  listings: Listing[];
 }
 export interface Listing {
   id: number;
   title: string;
   description: string;
-  slug: string;
   user_id: User['id'];
-  user: User['username'];
   category_id: Category['id'];
-  category: Category['name'];
   price: string;
-  image?: ProductImage[];
-}
-
-export interface ProductImage {
-  id: number;
-  image: string;
-  alt_text: string;
 }
