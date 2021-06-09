@@ -13,13 +13,13 @@ from resources.auth import (
     SignInApi,
     SignOutApi,
     SignUpApi,
-    user_ns,
-    user_signin_ns,
-    user_signout_ns,
-    user_signup_ns,
+    signin_ns,
+    signout_ns,
+    signup_ns,
 )
 from resources.category import CategoriesAPI, CategoryAPI, categories_ns, category_ns
 from resources.listing import ListingAPI, ListingsAPI, listing_ns, listings_ns
+from resources.user import UserAPI, UsersAPI, user_ns, users_ns
 
 # from werkzeug.utils import cached_property
 
@@ -71,10 +71,11 @@ api.add_namespace(listing_ns)
 api.add_namespace(listings_ns)
 api.add_namespace(category_ns)
 api.add_namespace(categories_ns)
+api.add_namespace(signup_ns)
+api.add_namespace(signin_ns)
+api.add_namespace(signout_ns)
+api.add_namespace(users_ns)
 api.add_namespace(user_ns)
-api.add_namespace(user_signup_ns)
-api.add_namespace(user_signin_ns)
-api.add_namespace(user_signout_ns)
 
 
 @app.before_first_request
@@ -91,9 +92,11 @@ listing_ns.add_resource(ListingAPI, "/<int:id>")
 listings_ns.add_resource(ListingsAPI, "")
 category_ns.add_resource(CategoryAPI, "/<int:id>")
 categories_ns.add_resource(CategoriesAPI, "")
-user_signup_ns.add_resource(SignUpApi, "/auth/signup")
-user_signin_ns.add_resource(SignInApi, "/auth/signin")
-user_signout_ns.add_resource(SignOutApi, "/auth/signout")
+signup_ns.add_resource(SignUpApi, "")
+signin_ns.add_resource(SignInApi, "")
+signout_ns.add_resource(SignOutApi, "")
+user_ns.add_resource(UserAPI, "/<int:id>")
+users_ns.add_resource(UsersAPI, "")
 
 if __name__ == "__main__":
     db.init_app(app)
