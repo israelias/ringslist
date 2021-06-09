@@ -13,22 +13,24 @@ class Listing(db.Model):
     title = db.Column(db.String(100), nullable=False, unique=True)
     description = db.Column(db.String(300))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    # user_username = db.Column(db.String(100), db.ForeignKey("user.username"))
     user = db.relationship("User", back_populates="listings")
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
-    # category_name = db.Column(db.String(100), db.ForeignKey("category.name"))
     category = db.relationship("Category", back_populates="listings")
+    # price = db.Column(db.Numeric(10, 2), default=0.00)
+    price = db.Column(db.Float())
 
-    def __init__(self, title, description, user_id, category_id):
+    def __init__(self, title, description, price, user_id, category_id):
         self.title = title
         self.description = description
+        self.price = price
         self.user_id = user_id
         self.category_id = category_id
 
     def __repr__(self):
-        return "Listing(title=%s, description=%s, user_id=%s, category_id=%s)" % (
+        return "Listing(title=%s, description=%s, price=%s, user_id=%s, category_id=%s)" % (
             self.title,
             self.description,
+            self.price,
             self.user_id,
             self.category_id,
         )
@@ -38,6 +40,7 @@ class Listing(db.Model):
             "id": self.id,
             "title": self.title,
             "description": self.description,
+            "price": self.price,
             "owner": self.user_id,
             "category": self.category_id,
         }

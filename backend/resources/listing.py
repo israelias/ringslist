@@ -23,6 +23,7 @@ listing_format = listings_ns.model(
         # "id": fields.Integer,
         "title": fields.String("Title of Listing"),
         "description": fields.String("Description of Listing"),
+        "price": fields.Fixed(decimals=2),
         # "user_id": fields.Integer,
         # "user": fields.String("Username of owner"),
         "category_id": fields.Integer,
@@ -69,7 +70,8 @@ class ListingAPI(Resource):
                 if listing.user_id == owner.id:
                     listing.title = body["title"]
                     listing.description = body["description"]
-                    listing.category_id = category.id
+                    listing.price = body["price"]
+                    listing.category_id = body["category_id"]  # category.id
             else:
                 listing = listing_schema.load(body)
 
