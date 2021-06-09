@@ -3,6 +3,8 @@ A classified ads app built with Python-Flask and React.
 
 An app that allows users to post second-hand goods and connect with members interested in such goods.
 
+Please visit the site at [ringslistings.vercel.app](https://ringslistings.vercel.app/)
+
 ## UX
 ### User Stories
 #### New Visitor Goals
