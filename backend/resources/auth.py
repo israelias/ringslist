@@ -11,6 +11,7 @@ from flask_restplus import Namespace, Resource, fields
 from models.token import TokenBlocklist
 from models.user import User
 from schemas.user import UserSchema
+from schemas.auth import AuthSchema
 
 USERNAME_NOT_FOUND = "Username not found."
 USERNAME_ALREADY_EXISTS = "Username '{}' Already exists."
@@ -22,7 +23,7 @@ signin_ns = Namespace("signin", description="User Signin related ops")
 signup_ns = Namespace("signup", description="User Signup related ops")
 signout_ns = Namespace("signout", description="User Signout related ops")
 
-user_schema = UserSchema()
+user_schema = AuthSchema()
 
 # Model required by flask_restplus for expect
 auth_format = signin_ns.model(
@@ -43,8 +44,8 @@ class SignUpApi(Resource):
         if User.find_by_username(username):
             return {"message": USERNAME_ALREADY_EXISTS.format(username)}, 400
         user = user_schema.load(body)
-        user.hash_password()
-        user.save_to_db()
+        # user.hash_password()
+        # user.save_to_db()
 
         expires = datetime.timedelta(hours=3)
         access_token = create_access_token(identity=str(user.id), expires_delta=expires)
@@ -62,7 +63,8 @@ class SignInApi(Resource):
     def post(self):
         body = request.get_json()
         user = User.find_by_username(body["username"])
-        authorized = user.check_password(body["password"])
+        # authorized = user.check_password(body["password"])
+        authorized = user.password == body['password']
 
         if not authorized:
             return {"message": UNAUTHORIZED_ERROR}, 400
@@ -79,7 +81,6 @@ class SignInApi(Resource):
 
 class SignOutApi(Resource):
     @jwt_required()
-    # @signout_ns.expect(user_format)
     @signout_ns.doc("SignOut User")
     def post(self):
         revoked_token = get_jwt()

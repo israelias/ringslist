@@ -30,7 +30,7 @@ else:
 
 # Initialize `app`
 app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname(__file__))
+# basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Import modules that require `app`
 from core.routes import initialize_routes
@@ -53,7 +53,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["PROPAGATE_EXCEPTIONS"] = True
 
 # Launch JWT manager `jwt`
-app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
+# app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
 jwt = JWTManager(app)
 
 # Initialize `bcrypt`

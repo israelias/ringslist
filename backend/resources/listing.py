@@ -20,14 +20,11 @@ listings_schema = ListingSchema(many=True)
 listing_format = listings_ns.model(
     "Listing",
     {
-        # "id": fields.Integer,
         "title": fields.String("Title of Listing"),
         "description": fields.String("Description of Listing"),
         "price": fields.Fixed(decimals=2),
-        # "user_id": fields.Integer,
-        # "user": fields.String("Username of owner"),
+        "user_id": fields.Integer,
         "category_id": fields.Integer,
-        # "category": fields.String("Category of Listing"),
     },
 )
 
@@ -71,7 +68,7 @@ class ListingAPI(Resource):
                     listing.title = body["title"]
                     listing.description = body["description"]
                     listing.price = body["price"]
-                    listing.category_id = body["category_id"]  # category.id
+                    listing.category_id = body["category_id"]
             else:
                 listing = listing_schema.load(body)
 
@@ -99,20 +96,9 @@ class ListingsAPI(Resource):
             user_id = get_jwt_identity()
             body = request.get_json()
             owner = User.find_by_id(user_id)
-            # category = Category.find_by_id(body["category_id"])
+
             listing = listing_schema.load(body)
-            # listing = Listing(
-            #     title=body["title"],
-            #     description=body["description"],
-            #     user_id=owner["username"],
-            #     category_id=category.id,
-            # )
-            # listing = listing_schema.load(
-            #     title=body["title"],
-            #     description=body["description"],
-            #     user_id=owner["username"],
-            #     category_id=category.id,
-            # )
+
             listing.save_to_db()
 
             return listing_schema.dump(listing), 201

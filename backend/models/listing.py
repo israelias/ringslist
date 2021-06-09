@@ -16,7 +16,6 @@ class Listing(db.Model):
     user = db.relationship("User", back_populates="listings")
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
     category = db.relationship("Category", back_populates="listings")
-    # price = db.Column(db.Numeric(10, 2), default=0.00)
     price = db.Column(db.Float())
 
     def __init__(self, title, description, price, user_id, category_id):
