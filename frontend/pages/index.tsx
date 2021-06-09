@@ -1,8 +1,6 @@
 import Feed from '../components/Feed';
 import Layout from '../components/Layout';
 
-import { getRequest } from '../services/crud.service';
-
 import { Listing, Category } from '../interfaces';
 
 type Props = {
