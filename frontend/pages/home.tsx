@@ -1,4 +1,3 @@
-import Feed from '../components/Feed';
 import Layout from '../components/Layout';
 import ListingCard from '../components/Card';
 import { Listing, Category } from '../interfaces';

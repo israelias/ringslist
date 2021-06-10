@@ -35,15 +35,6 @@ const Feed = ({ listings }: Props) => {
                     elevation={0}
                     style={{ cursor: 'pointer' }}
                   >
-                    {/* {listing.image && (
-                      <CardMedia
-                        className={classes.cardMedia}
-                        // component="img"
-                        image={listing.image[0].image}
-                        title={listing.image[0].alt_text}
-                        // alt={post.product_image[0].alt_text}
-                      />
-                    )} */}
                     <CardContent>
                       <Typography
                         gutterBottom

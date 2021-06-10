@@ -6,7 +6,6 @@ import {
   Checkbox,
   Link,
   Grid,
-  Box,
   Typography,
   Container,
   CssBaseline,

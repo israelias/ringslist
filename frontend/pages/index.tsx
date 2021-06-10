@@ -1,4 +1,3 @@
-import Feed from '../components/Feed';
 import Registration from '../components/Registration';
 import Layout from '../components/Layout';
 

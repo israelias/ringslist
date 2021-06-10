@@ -1,8 +1,7 @@
 /**
  * Utility object with keys to functions pertaining to local storage management.
  *
- * @file defines storage object and its children.
- * @since 4.04.21
+ * @see UserProvider
  */
 
 export const storage = {
