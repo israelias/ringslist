@@ -23,10 +23,7 @@ export default function Toast({
   open,
   setOpen,
 }: ToastProps) {
-  const handleClose = (
-    event?: React.SyntheticEvent,
-    reason?: string
-  ) => {
+  const handleClose = (reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -39,10 +36,10 @@ export default function Toast({
       <Snackbar
         open={open}
         autoHideDuration={6000}
-        onClose={handleClose}
+        onClose={() => handleClose}
       >
         <Alert
-          onClose={handleClose}
+          onClose={() => handleClose}
           severity={
             error
               ? 'error'
