@@ -61,7 +61,7 @@ const Navbar = ({ categories }: Props) => {
   const classes = useStyles();
   const { loggedIn, username, userId, handleSignOut } =
     useUserContext();
-  const { setHeading, setId, setEditing } = useDataHandler();
+  const { setHeading, setEditing } = useDataHandler();
   const router = useRouter();
   return (
     <React.Fragment>
