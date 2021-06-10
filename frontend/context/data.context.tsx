@@ -36,10 +36,8 @@ type HandlerType = {
   setSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
   deleting: boolean;
   setDeleting: React.Dispatch<React.SetStateAction<boolean>>;
-
   heading: string;
   setHeading: React.Dispatch<React.SetStateAction<string>>;
-
   handleSubmit: (
     e: React.FormEvent<HTMLFormElement>
   ) => Promise<void>;
@@ -57,7 +55,7 @@ export function DataHandlerProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { username, accessToken, userId } = useUserContext();
+  const { accessToken, userId } = useUserContext();
 
   const router = useRouter();
 
@@ -87,7 +85,7 @@ export function DataHandlerProvider({
     setTimeout(() => {
       setOpenSuccess(false);
       setMessage('');
-    }, 1750);
+    }, 1250);
   };
   const onWarning = (text: string | any) => {
     setMessage(text);
@@ -95,7 +93,7 @@ export function DataHandlerProvider({
     setTimeout(() => {
       setOpenWarning(false);
       setMessage('');
-    }, 1750);
+    }, 1250);
   };
   const onError = (text: string | any) => {
     setMessage(text);
@@ -103,7 +101,7 @@ export function DataHandlerProvider({
     setTimeout(() => {
       setOpenError(false);
       setMessage('');
-    }, 1750);
+    }, 1250);
   };
 
   const handleCancel = () => {
@@ -146,7 +144,7 @@ export function DataHandlerProvider({
               clearValues();
 
               router.push({ pathname: `/home` });
-            }, 1500);
+            }, 900);
           } else {
             response.json().then((data) => {
               if (data.message) {
@@ -185,7 +183,7 @@ export function DataHandlerProvider({
               clearValues();
 
               router.push({ pathname: `/home` });
-            }, 1500);
+            }, 900);
           } else {
             response.json().then((data) => {
               if (data.message) {
@@ -223,7 +221,7 @@ export function DataHandlerProvider({
             setDeleting(false);
 
             router.push({ pathname: `/home` });
-          }, 1500);
+          }, 900);
         }
       });
     } catch (err: any) {

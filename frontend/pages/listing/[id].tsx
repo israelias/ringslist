@@ -6,11 +6,12 @@ import {
   Paper,
   Grid,
   Box,
-  // Hidden,
+
   Typography,
 } from '@material-ui/core';
 
 import Layout from '../../components/Layout';
+
 import { useStyles } from '../../styles/listing.styles';
 import { Listing, Category } from '../../interfaces';
 
@@ -30,30 +31,8 @@ function ListingPage({ listing, categories }: Props) {
   return (
     <Layout title={listing.title} categories={categories}>
       <Container maxWidth="md">
-        <Grid container spacing={0}>
-          {/* <Hidden only={['xs', 'sm']}>
-            <Grid item sm={1}>
-              <Paper
-                className={classes.paperImagePreview}
-                elevation={0}
-              >
-                {listing.image?.map((c) => (
-                  <div>
-                    <Paper
-                      className={classes.paperImage}
-                      elevation={0}
-                    >
-                      <img
-                        src={''}
-                        alt={''}
-                        className={classes.img}
-                      />
-                    </Paper>
-                  </div>
-                ))}
-              </Paper>
-            </Grid>
-          </Hidden> */}
+    
+        <Grid className={classes.center} container spacing={2}>
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paperImage} elevation={0}>
               <Typography gutterBottom component="p">
@@ -72,8 +51,11 @@ function ListingPage({ listing, categories }: Props) {
               <Box component="p" fontSize={22} fontWeight="900" m={0}>
                 From {listing.user_id}
               </Box>
-              <Box component="p" m={0} fontSize={14}>
+              <Box component="p" mt={2} fontSize={14}>
                 Free Delivery & Returns (Ts&Cs apply)
+              </Box>
+              <Box component="p" mt={2} fontSize={14}>
+                do NOT contact me with unsolicited services or offers
               </Box>
             </Paper>
           </Grid>

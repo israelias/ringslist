@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticProps } from 'next';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -9,10 +9,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
-import { Listing, Category } from '../../interfaces';
+import { Listing, Category } from '../interfaces';
 
-import Layout from '../../components/Layout';
-import { useDataHandler } from '../../context/data.context';
+import Layout from '../components/Layout';
+import { useDataHandler } from '../context/data.context';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -73,19 +73,13 @@ const AddListing = ({ categories }: Props) => {
     setDescription,
     price,
     setPrice,
-    id,
     setId,
     categoryId,
     setCategoryId,
-    submitting,
-    setSubmitting,
-    deleting,
-    setDeleting,
     editing,
     setEditing,
     heading,
     setHeading,
-    clearValues,
     handleDelete,
     handleCancel,
     handleSubmit,
@@ -204,7 +198,7 @@ const AddListing = ({ categories }: Props) => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const ress = await fetch(
     'https://rlist-backend.herokuapp.com/api/categories'
   );
@@ -215,6 +209,6 @@ export async function getStaticProps() {
       categories,
     },
   };
-}
+};
 
 export default AddListing;
