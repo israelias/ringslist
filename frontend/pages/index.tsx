@@ -4,11 +4,10 @@ import Layout from '../components/Layout';
 import { Listing, Category } from '../interfaces';
 
 type Props = {
-  listings: Listing[];
   categories: Category[];
 };
 
-const RegistrationPage = ({ listings, categories }: Props) => {
+const RegistrationPage = ({ categories }: Props) => {
   return (
     <Layout
       title="RingsListings: Registration"
@@ -22,11 +21,6 @@ const RegistrationPage = ({ listings, categories }: Props) => {
 };
 
 export async function getStaticProps() {
-  const res = await fetch(
-    'https://rlist-backend.herokuapp.com/api/listings'
-  );
-  const listings = await res.json();
-
   const ress = await fetch(
     'https://rlist-backend.herokuapp.com/api/categories'
   );
@@ -34,7 +28,6 @@ export async function getStaticProps() {
 
   return {
     props: {
-      listings,
       categories,
     },
   };
