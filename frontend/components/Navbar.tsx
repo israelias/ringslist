@@ -11,7 +11,6 @@ import {
   Typography,
   IconButton,
   Button,
-
 } from '@material-ui/core';
 import AddSharp from '@material-ui/icons/AddSharp';
 
@@ -73,6 +72,7 @@ const Navbar = ({ categories }: Props) => {
             variant="h4"
             align="center"
             noWrap
+            style={{ cursor: 'pointer', paddingRight: '36px' }}
           >
             RingsListings
           </Typography>
@@ -95,8 +95,8 @@ const Navbar = ({ categories }: Props) => {
             onClick={() => {
               setEditing(false);
               setHeading('New Listing');
-              setId(0);
-              router.push({ pathname: `/edit/0` });
+
+              router.push({ pathname: `/add` });
             }}
           >
             <AddSharp
@@ -110,12 +110,17 @@ const Navbar = ({ categories }: Props) => {
               variant="outlined"
               size="small"
               color="secondary"
-              onClick={() => handleSignOut}
+              onClick={handleSignOut}
             >
               Sign Out
             </Button>
           ) : (
-            <Button variant="outlined" size="small" href="/">
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="small"
+              href="/"
+            >
               Register
             </Button>
           )}

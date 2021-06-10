@@ -1,6 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 
-import Feed from '../../components/Feed';
+import ListingCard from '../../components/Card';
 import Layout from '../../components/Layout';
 
 import { Category } from '../../interfaces';
@@ -29,7 +29,7 @@ const CategoryPage = ({
       title={`RingsListings: ${category}`}
       categories={categories}
     >
-      <Feed listings={listings} />
+      <ListingCard listings={listings} />
     </Layout>
   );
 };

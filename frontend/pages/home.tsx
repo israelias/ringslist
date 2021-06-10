@@ -14,7 +14,6 @@ const Home = ({ listings, categories }: Props) => {
       categories={categories}
     >
       <main>
-        {/* <Feed listings={listings} /> */}
         <ListingCard listings={listings} />
       </main>
     </Layout>

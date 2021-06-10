@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import { Listing, Category } from '../../interfaces';
 
@@ -130,11 +131,18 @@ const EditListing = ({ categories, listing }: Props) => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  required
-                  id="description"
-                  label="Description"
                   fullWidth
                   autoComplete="About the listing"
+                />
+                <TextareaAutosize
+                  rowsMax={4}
+                  required
+                  id="description"
+                  aria-label="description"
+                  placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua."
+                  defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
