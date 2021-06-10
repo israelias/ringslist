@@ -13,8 +13,8 @@
 /**
  * Api backend base URL.
  */
-// const API = 'http://localhost:5000';
-const API = 'https://rlist-backend.herokuapp.com/api';
+
+const API = 'https://rlist-backend.herokuapp.com';
 
 export const RequestTicket = ({
   method,
