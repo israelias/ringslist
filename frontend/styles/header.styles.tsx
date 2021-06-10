@@ -18,10 +18,10 @@ export const useStyles = makeStyles((theme) => ({
   appbarPromotion: {
     backgroundColor: '#2d2d2d',
     color: '#fff',
-    margin: theme.spacing(0, 0, 8),
-    ['@media (max-width:600px)']: {
-      margin: theme.spacing(0, 0, 2),
-    },
+    // margin: theme.spacing(0, 0, 8),
+    // ['@media (max-width:600px)']: {
+    //   margin: theme.spacing(0, 0, 2),
+    // },
   },
   toolbarDesktop: {
     padding: '0px',
@@ -30,10 +30,16 @@ export const useStyles = makeStyles((theme) => ({
   toolbarMain: {
     padding: '0px',
     minHeight: 60,
+    display: 'flex',
+
+    justifyContent: 'space-between',
   },
   toolbarSecondary: {
     padding: '0px',
     minHeight: 50,
+    display: 'flex',
+
+    justifyContent: 'space-between',
   },
   toolbarPromotion: {
     padding: '0px',

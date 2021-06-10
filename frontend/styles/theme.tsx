@@ -1,17 +1,16 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import red from '@material-ui/core/colors/red';
 
 // Create a theme instance.
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#9d9c7b',
     },
     secondary: {
-      main: '#19857b',
+      main: '#f8c554',
     },
     error: {
-      main: red.A400,
+      main: '#ff5470',
     },
     background: {
       default: '#fff',
@@ -20,3 +19,23 @@ const theme = createMuiTheme({
 });
 
 export default theme;
+
+// appbarDesktop: {
+//   backgroundColor: '#f8f8f8',
+//   color: '#fff',
+// },
+// appbarMain: {
+//   backgroundColor: '#2d2d2d',
+// },
+// appbarSecondary: {
+//   backgroundColor: '#525050',
+//   color: '#fff',
+// },
+// appbarPromotion: {
+//   backgroundColor: '#2d2d2d',
+//   color: '#fff',
+//   margin: theme.spacing(0, 0, 8),
+//   ['@media (max-width:600px)']: {
+//     margin: theme.spacing(0, 0, 2),
+//   },
+// },
