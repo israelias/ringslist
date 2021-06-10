@@ -1,7 +1,7 @@
 import Registration from '../components/Registration';
 import Layout from '../components/Layout';
 
-import { Listing, Category } from '../interfaces';
+import { Category } from '../interfaces';
 
 type Props = {
   categories: Category[];
