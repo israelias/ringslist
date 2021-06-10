@@ -1,4 +1,5 @@
 import Feed from '../components/Feed';
+import Registration from '../components/Registration';
 import Layout from '../components/Layout';
 
 import { Listing, Category } from '../interfaces';
@@ -8,14 +9,14 @@ type Props = {
   categories: Category[];
 };
 
-const Home = ({ listings, categories }: Props) => {
+const RegistrationPage = ({ listings, categories }: Props) => {
   return (
     <Layout
-      title="RingsListings: All Listings"
+      title="RingsListings: Registration"
       categories={categories}
     >
       <main>
-        <Feed listings={listings} />
+        <Registration />
       </main>
     </Layout>
   );
@@ -40,4 +41,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Home;
+export default RegistrationPage;
