@@ -27,7 +27,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: '0px',
     minHeight: 60,
     display: 'flex',
-
+    paddingTop: theme.spacing(0),
     justifyContent: 'space-between',
   },
   toolbarSecondary: {
