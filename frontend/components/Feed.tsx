@@ -30,7 +30,11 @@ const Feed = ({ listings }: Props) => {
                 href={`listing/${encodeURIComponent(listing.id)}`}
               >
                 <Grid item xs={6} sm={4} md={3}>
-                  <Card className={classes.card} elevation={0}>
+                  <Card
+                    className={classes.card}
+                    elevation={0}
+                    style={{ cursor: 'pointer' }}
+                  >
                     {/* {listing.image && (
                       <CardMedia
                         className={classes.cardMedia}
@@ -41,8 +45,12 @@ const Feed = ({ listings }: Props) => {
                       />
                     )} */}
                     <CardContent>
-                      <Typography gutterBottom component="p">
-                        {listing.title}, from {listing.user_id}
+                      <Typography
+                        gutterBottom
+                        component="h4"
+                        variant="h5"
+                      >
+                        {listing.title}
                       </Typography>
                       <Typography gutterBottom component="p">
                         {listing.description}
@@ -52,7 +60,7 @@ const Feed = ({ listings }: Props) => {
                         fontSize={16}
                         fontWeight={900}
                       >
-                        {listing.price}
+                        ₱ {listing.price}
                       </Box>
                     </CardContent>
                   </Card>
