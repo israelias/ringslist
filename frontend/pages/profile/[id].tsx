@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetStaticPaths } from 'next';
 
 import Feed from '../../components/Feed';
 import Layout from '../../components/Layout';
