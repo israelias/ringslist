@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetServerSideProps } from 'next';
 
 import ListingCard from '../../components/Card';
 import Layout from '../../components/Layout';
