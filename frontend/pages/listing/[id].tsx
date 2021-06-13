@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetServerSideProps, GetStaticPaths } from 'next';
 
 import {
   Container,
   Paper,
   Grid,
   Box,
-
   Typography,
 } from '@material-ui/core';
 
@@ -31,7 +30,6 @@ function ListingPage({ listing, categories }: Props) {
   return (
     <Layout title={listing.title} categories={categories}>
       <Container maxWidth="md">
-    
         <Grid className={classes.center} container spacing={2}>
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paperImage} elevation={0}>
@@ -84,7 +82,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 // This also gets called at build time
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+}) => {
   const res = await fetch(
     `https://rlist-backend.herokuapp.com/api/listing/${
       params && params.id.toString()

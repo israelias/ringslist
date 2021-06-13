@@ -1,4 +1,4 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticProps, GetServerSideProps } from 'next';
 
 import Feed from '../../components/Feed';
 import Layout from '../../components/Layout';
@@ -42,7 +42,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+}) => {
   const user = params?.id.toString();
   const res = await fetch(
     `https://rlist-backend.herokuapp.com/api/user/${user}`

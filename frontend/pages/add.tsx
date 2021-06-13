@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -198,7 +198,7 @@ const AddListing = ({ categories }: Props) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const ress = await fetch(
     'https://rlist-backend.herokuapp.com/api/categories'
   );

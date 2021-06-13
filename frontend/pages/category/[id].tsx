@@ -1,4 +1,4 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticProps, GetServerSideProps } from 'next';
 
 import ListingCard from '../../components/Card';
 import Layout from '../../components/Layout';
@@ -52,7 +52,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+}) => {
   const category = params?.id.toString();
   const res = await fetch(
     `https://rlist-backend.herokuapp.com/api/category/${category}`

@@ -20,7 +20,7 @@ const Home = ({ listings, categories }: Props) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await fetch(
     'https://rlist-backend.herokuapp.com/api/listings'
   );

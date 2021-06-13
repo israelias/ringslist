@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetServerSideProps, GetStaticPaths } from 'next';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -228,7 +228,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 // This also gets called at build time
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+}) => {
   const param = params?.id.toString();
 
   const res = await fetch(

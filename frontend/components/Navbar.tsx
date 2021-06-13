@@ -66,17 +66,18 @@ const Navbar = ({ categories }: Props) => {
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-        <MLink>
+        <Link href="/home">
           <Typography
             component="h1"
             variant="h4"
             align="center"
+            color="primary"
             noWrap
             style={{ cursor: 'pointer', paddingRight: '36px' }}
           >
             RingsListings
           </Typography>
-        </MLink>
+        </Link>
         <Toolbar className={classes.toolbarMain}>
           {loggedIn && (
             <Link href={`profile/${encodeURIComponent(userId)}`}>
