@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticPaths } from 'next';
+import { GetServerSideProps } from 'next';
 
 import Feed from '../../components/Feed';
 import Layout from '../../components/Layout';
@@ -22,24 +22,6 @@ const UserPage = ({ user_listings, categories, user }: Props) => {
       <Feed listings={listings} />
     </Layout>
   );
-};
-
-// This function gets called at build time
-export const getStaticPaths: GetStaticPaths = async () => {
-  // Call an external API endpoint to get posts
-  const res = await fetch(
-    'https://rlist-backend.herokuapp.com/api/users'
-  );
-  const users = await res.json();
-
-  // Get the paths we want to pre-render based on posts
-  const paths = users.map((user: User) => ({
-    params: { id: user.id.toString() },
-  }));
-
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: false };
 };
 
 export const getServerSideProps: GetServerSideProps = async ({

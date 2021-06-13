@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetServerSideProps } from 'next';
+import { GetServerSideProps } from 'next';
 
 import ListingCard from '../../components/Card';
 import Layout from '../../components/Layout';
@@ -32,24 +32,6 @@ const CategoryPage = ({
       <ListingCard listings={listings} />
     </Layout>
   );
-};
-
-// This function gets called at build time
-export const getStaticPaths: GetStaticPaths = async () => {
-  // Call an external API endpoint to get posts
-  const res = await fetch(
-    'https://rlist-backend.herokuapp.com/api/categories'
-  );
-  const categories = await res.json();
-
-  // Get the paths we want to pre-render based on posts
-  const paths = categories.map((category: Category) => ({
-    params: { id: category.id.toString() },
-  }));
-
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: false };
 };
 
 export const getServerSideProps: GetServerSideProps = async ({
