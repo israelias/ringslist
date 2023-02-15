@@ -30,7 +30,7 @@ six==1.16.0
 SQLAlchemy==1.4.17
 toml==0.10.2
 typing==3.7.4.3
-Werkzeug==0.16.1
+Werkzeug==2.2.3
 gunicorn==20.1.0
 dnspython==2.1.0
 psycopg2-binary==2.8.6
