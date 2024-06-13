@@ -22,16 +22,20 @@ from resources.category import CategoriesAPI, CategoryAPI, categories_ns, catego
 from resources.listing import ListingAPI, ListingsAPI, listing_ns, listings_ns
 from resources.user import UserAPI, UsersAPI, user_ns, users_ns
 
+
+
 # Heroku-specific postgresql config
-uri = os.getenv("DATABASE_URL")
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
+# uri = os.getenv("DATABASE_URL")
+# if uri and uri.startswith("postgres://"):
+#     uri = uri.replace("postgres://", "postgresql://", 1)
 
 
 if not os.path.exists("env.py"):
     pass
 else:
     import env
+
+debug = os.environ.get("DEVELOPMENT")
 
 # ===========================================================================
 # *               `Flask App and Configs`
@@ -42,7 +46,7 @@ else:
 
 # Initialize `app`
 app = Flask(__name__)
-# basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 # Initialize `Blueprint API`
@@ -52,11 +56,13 @@ app.register_blueprint(bluePrint)
 
 
 # Apply database configs
-# Development DB
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "db.sqlite")
-
-# Production DB
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_DATABASE_URI")
+if debug:
+    # Development DB
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "db.sqlite")
+else:
+    # Production DB
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+# Apply db settings
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["PROPAGATE_EXCEPTIONS"] = True
 
