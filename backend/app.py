@@ -23,7 +23,6 @@ from resources.listing import ListingAPI, ListingsAPI, listing_ns, listings_ns
 from resources.user import UserAPI, UsersAPI, user_ns, users_ns
 
 
-
 # Heroku-specific postgresql config
 # uri = os.getenv("DATABASE_URL")
 # if uri and uri.startswith("postgres://"):
@@ -61,7 +60,10 @@ if debug:
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "db.sqlite")
 else:
     # Production DB
+    from sqlalchemy import create_engine
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    engine = create_engine(os.environ['DATABASE_URL'])
+    engine.connect()
 # Apply db settings
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["PROPAGATE_EXCEPTIONS"] = True

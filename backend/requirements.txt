@@ -28,6 +28,7 @@ pytz==2021.1
 regex==2021.4.4
 six==1.16.0
 SQLAlchemy==1.4.17
+sqlalchemy-cockroachdb==1.4.4
 toml==0.10.2
 typing==3.7.4.3
 Werkzeug==0.16.1
