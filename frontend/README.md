@@ -25,7 +25,7 @@ Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&ut
 This example shows how to integrate the TypeScript type system into Next.js. Since TypeScript is supported out of the box with Next.js, all we have to do is to install TypeScript.
 
 ```
-npm install --save-dev typescript
+npm install --save-dev typescript  
 ```
 
 To enable TypeScript's features, we install the type declarations for React and Node.
@@ -39,3 +39,6 @@ When we run `next dev` the next time, Next.js will start looking for any `.ts` o
 Next.js has built-in TypeScript declarations, so we'll get autocompletion for Next.js' modules straight away.
 
 A `type-check` script is also added to `package.json`, which runs TypeScript's `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include this, for example, in your `test` scripts.
+
+testing commit
+
